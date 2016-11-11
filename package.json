@@ -1,0 +1,25 @@
+{
+  "name": "react-native-dropdown-menu",
+  "version": "1.0.1",
+  "description": "Dorpdown menu for react native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WheelerLee/react-native-dropdown-menu.git"
+  },
+  "keywords": [
+    "react",
+    "native",
+    "dropdown",
+    "menu"
+  ],
+  "author": "WheelerLee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WheelerLee/react-native-dropdown-menu/issues"
+  },
+  "homepage": "https://github.com/WheelerLee/react-native-dropdown-menu#readme"
+}

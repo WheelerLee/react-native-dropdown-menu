@@ -28,7 +28,13 @@ var Demo = React.createClass({
           data={data}                                
           maxHeight={410}                            // the max height of the menu
           handler={(selection, row) => alert(data[selection][row])} >
-          ...
+
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} >
+            <Text>
+              Your own view Here
+            </Text>
+          </View>
+
         </DropdownMenu>
       </View>
     );

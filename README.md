@@ -19,8 +19,15 @@ var Demo = React.createClass({
     var data = [["C", "Java", "JavaScript"], ["Python", "Ruby"], ["Swift", "Objective-C"]];
     return (
       <View style={{flex: 1}} >
-        <DropdownMenu style={{flex: 1}} data={data} maxHeight={410}
-          handler={(selection, row) => alert(data[selection][row]} >
+        <DropdownMenu style={{flex: 1}}
+          arrowImg={require('./img/arrow.png')}      //set the arrow icon, default is a triangle
+          checkImage={require('./img/check.png')}    //set the icon of the selected item, default is a check mark
+          bgColor={"red"}                            //the background color of the head, default is grey
+          tintColor={"white"}                        //the text color of the head, default is white
+          selectItemColor={"red"}                    //the text color of the selected item, default is red
+          data={data}                                
+          maxHeight={410}                            // the max height of the menu
+          handler={(selection, row) => alert(data[selection][row])} >
           ...
         </DropdownMenu>
       </View>

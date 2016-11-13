@@ -6,8 +6,6 @@ export default class DropdownMenu extends Component {
   constructor(props, context) {
     super(props, context);
 
-    console.log(props);
-
     var selectIndex = new Array(this.props.data.length);
     for (var i = 0; i < selectIndex.length; i++) {
       selectIndex[i] = 0;
@@ -17,15 +15,25 @@ export default class DropdownMenu extends Component {
       selectIndex: selectIndex,
       rotationAnims: props.data.map(() => new Animated.Value(0))
     };
+
+    this.defaultConfig = {
+      bgColor: 'grey',
+      tintColor: 'white',
+      selectItemColor: "red",
+      arrowImg: './img/dropdown_arrow.png',
+      checkImage: './img/menu_check.png'
+    };
+
   }
 
   renderChcek(index, title) {
     var activityIndex = this.state.activityIndex;
     if (this.state.selectIndex[activityIndex] == index) {
+      var checkImage = this.props.checkImage ? this.props.checkImage : require('./img/menu_check.png');
       return (
         <View style={{flex: 1, justifyContent: 'space-between', alignItems: "center", paddingHorizontal: 15, flexDirection: 'row'}} >
-          <Text style={{color: 'red'}} >{title}</Text>
-          <Image source={require("./img/menu_check.png")} />
+          <Text style={{color: this.props.selectItemColor ? this.props.selectItemColor : this.defaultConfig.selectItemColor}} >{title}</Text>
+          <Image source={checkImage} />
         </View>
       );
     } else {
@@ -72,22 +80,49 @@ export default class DropdownMenu extends Component {
 
   openOrClosePanel(index) {
 
-    var toValue = 0.5;
+    // var toValue = 0.5;
     if (this.state.activityIndex == index) {
+      this.closePanel(index);
       this.setState({
         activityIndex: -1,
       });
-      toValue = 0;
+      // toValue = 0;
     } else {
+      if (this.state.activityIndex > -1) {
+        this.closePanel(this.state.activityIndex);
+      }
+      this.openPanel(index);
       this.setState({
         activityIndex: index,
       });
-      toValue = 0.5;
+      // toValue = 0.5;
     }
+    // Animated.timing(
+    //   this.state.rotationAnims[index],
+    //   {
+    //     toValue: toValue,
+    //     duration: 300,
+    //     easing: Easing.linear
+    //   }
+    // ).start();
+  }
+
+  openPanel(index) {
     Animated.timing(
       this.state.rotationAnims[index],
       {
-        toValue: toValue,
+        toValue: 0.5,
+        duration: 300,
+        easing: Easing.linear
+      }
+    ).start();
+  }
+
+  closePanel(index) {
+    Animated.timing(
+      this.state.rotationAnims[index],
+      {
+        toValue: 0,
         duration: 300,
         easing: Easing.linear
       }
@@ -108,11 +143,26 @@ export default class DropdownMenu extends Component {
     this.openOrClosePanel(this.state.activityIndex);
   }
 
+  renderDropDownArrow(index) {
+    var icon = this.props.arrowImg ? this.props.arrowImg : require('./img/dropdown_arrow.png');
+
+    return (
+      <Animated.Image
+        source={icon}
+        style={{marginLeft: 8, transform: [{
+          rotateZ: this.state.rotationAnims[index].interpolate({
+            inputRange: [0, 1],
+            outputRange: ['0deg', '360deg']
+          })
+        }]}} />
+    );
+  }
+
   render() {
 
     return (
       <View style={{flexDirection: 'column', flex: 1}} >
-        <View style={{flexDirection: 'row', backgroundColor: "#D8262F"}} >
+        <View style={{flexDirection: 'row', backgroundColor: this.props.bgColor ? this.props.bgColor : this.defaultConfig.bgColor}} >
 
           {
             this.props.data.map((rows, index) =>
@@ -122,15 +172,8 @@ export default class DropdownMenu extends Component {
                 key={index}
                 style={{flex: 1, height: 40, alignItems: "center", justifyContent: "center"}} >
                 <View style={{flexDirection: 'row', alignItems: "center", justifyContent: "center"}} >
-                  <Text style={{color: 'white', fontSize: 13}} >{rows[this.state.selectIndex[index]]}</Text>
-                  <Animated.Image
-                    source={require("./img/dropdown_arrow.png")}
-                    style={{marginLeft: 8, transform: [{
-                      rotateZ: this.state.rotationAnims[index].interpolate({
-                        inputRange: [0, 1],
-                        outputRange: ['0deg', '360deg']
-                      })
-                    }]}} />
+                  <Text style={{color: this.props.tintColor ? this.props.tintColor : this.defaultConfig.tintColor, fontSize: 13}} >{rows[this.state.selectIndex[index]]}</Text>
+                  {this.renderDropDownArrow(index)}
                 </View>
               </TouchableOpacity>
             )

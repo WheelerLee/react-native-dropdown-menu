@@ -6,12 +6,16 @@ A `<DropdownMenu>` component for react-native.It is very easy to use.
 
 ## Install
 ```shell
-npm i --save react-native-dropdown-menu
+npm i --save react-native-dropdown-menu@https://github.com/mataoct/react-native-dropdown-menu
+```
+or
+```shell
+yarn add react-native-dropdown-menu@https://github.com/mataoct/react-native-dropdown-menu
 ```
 
 ## Usage
 ```js
-var DropdownMenu = require('react-native-dropdown-menu');
+import DropdownMenu from 'react-native-dropdown-menu';
 
 var Demo = React.createClass({
 

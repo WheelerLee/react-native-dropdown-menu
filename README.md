@@ -2,7 +2,7 @@
 
 A `<DropdownMenu>` component for react-native.Easy to use.
 
- ![image](https://github.com/WheelerLee/react-native-dropdown-menu/blob/master/screenshot.gif?raw=true)
+ ![image](https://github.com/WheelerLee/react-native-dropdown-menu/blob/master/screenshot1.gif?raw=true)
 
 ## Install
 ```shell

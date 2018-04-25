@@ -17,7 +17,7 @@ yarn add react-native-dropdown-menu
 ```js
 import DropdownMenu from 'react-native-dropdown-menu';
 
-export default class Splash extends Component {
+export default class Demo extends Component {
 
   constructor(props) {
     super(props);
@@ -35,7 +35,7 @@ export default class Splash extends Component {
           style={{flex: 1}}
           bgColor={'white'}
           tintColor={'#666666'}
-          activityTintColor={'red'}
+          activityTintColor={'green'}
           // arrowImg={}      
           // checkImage={}   
           // optionTextStyle={{color: '#333333'}}

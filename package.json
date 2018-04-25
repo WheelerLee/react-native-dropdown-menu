@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/WheelerLee/react-native-dropdown-menu/issues"
   },
-  "homepage": "https://github.com/WheelerLee/react-native-dropdown-menu#readme"
+  "homepage": "https://github.com/WheelerLee/react-native-dropdown-menu#readme",
+  "dependencies": {
+    "prop-types": "^15.6.1"
+  }
 }

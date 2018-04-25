@@ -1,41 +1,53 @@
 # react-native-dropdown-menu
 
-A `<DropdownMenu>` component for react-native.It is very easy to use.
+A `<DropdownMenu>` component for react-native.Easy to use.
 
  ![image](https://github.com/WheelerLee/react-native-dropdown-menu/blob/master/screenshot.gif?raw=true)
 
 ## Install
 ```shell
-npm i --save react-native-dropdown-menu@https://github.com/mataoct/react-native-dropdown-menu
+npm i react-native-dropdown-menu --save
 ```
 or
 ```shell
-yarn add react-native-dropdown-menu@https://github.com/mataoct/react-native-dropdown-menu
+yarn add react-native-dropdown-menu
 ```
 
 ## Usage
 ```js
 import DropdownMenu from 'react-native-dropdown-menu';
 
-var Demo = React.createClass({
+export default class Splash extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: ''
+    };
+  }
+  
   render() {
-    var data = [["C", "Java", "JavaScript"], ["Python", "Ruby"], ["Swift", "Objective-C"]];
+    var data = [["C", "Java", "JavaScript", "PHP"], ["Python", "Ruby"], ["Swift", "Objective-C"]];
     return (
-      <View style={{flex: 1}} >
-        <DropdownMenu style={{flex: 1}}
-          arrowImg={require('./img/arrow.png')}      //set the arrow icon, default is a triangle
-          checkImage={require('./img/check.png')}    //set the icon of the selected item, default is a check mark
-          bgColor={"red"}                            //the background color of the head, default is grey
-          tintColor={"white"}                        //the text color of the head, default is white
-          selectItemColor={"red"}                    //the text color of the selected item, default is red
-          data={data}                                
-          maxHeight={410}                            // the max height of the menu
-          handler={(selection, row) => alert(data[selection][row])} >
+      <View style={{flex: 1}}>
+        <View style={{height: 64}} />
+        <DropdownMenu
+          style={{flex: 1}}
+          bgColor={'white'}
+          tintColor={'#666666'}
+          activityTintColor={'red'}
+          // arrowImg={}      
+          // checkImage={}   
+          // optionTextStyle={{color: '#333333'}}
+          // titleStyle={{color: '#333333'}} 
+          // maxHeight={300} 
+          handler={(selection, row) => this.setState({text: data[selection][row]})}
+          data={data}
+        >
 
-          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} >
+          <View style={{flex: 1}}>
             <Text>
-              Your own view Here
+              {this.state.text} is the best language in the world
             </Text>
           </View>
 
@@ -43,4 +55,6 @@ var Demo = React.createClass({
       </View>
     );
   }
+  
+}
 ```

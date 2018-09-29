@@ -1,8 +1,20 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {View, Text, TouchableHighlight, Image, TouchableOpacity, ScrollView, Animated, Easing, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableHighlight,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  Animated,
+  Easing,
+  StyleSheet, Dimensions
+} from 'react-native';
 import PropTypes from 'prop-types';
+
+const {width, height} = Dimensions.get('window');
 
 class DropdownMenu extends Component {
 
@@ -17,14 +29,15 @@ class DropdownMenu extends Component {
       activityIndex: -1,
       selectIndex: selectIndex,
       rotationAnims: props.data.map(() => new Animated.Value(0))
-  };
+    };
 
     this.defaultConfig = {
       bgColor: 'grey',
       tintColor: '#333333',
-      activityTintColor: "red",
+      activityTintColor: "#568236",
       arrowImg: require('./img/dropdown_arrow.png'),
-      checkImage: require('./img/menu_check.png')
+      checkImage: require('./img/menu_check.png'),
+      unImage: require('./img/menu_check.png')
     };
 
   }
@@ -33,31 +46,45 @@ class DropdownMenu extends Component {
     var activityIndex = this.state.activityIndex;
     if (this.state.selectIndex[activityIndex] == index) {
       var checkImage = this.props.checkImage ? this.props.checkImage : this.defaultConfig.checkImage;
+
       return (
-        <View style={{flex: 1, justifyContent: 'space-between', alignItems: "center", paddingHorizontal: 15, flexDirection: 'row'}} >
-    <Text
-      style={[
-        styles.item_text_style,
-        this.props.optionTextStyle,
-        {color: this.props.activityTintColor ? this.props.activityTintColor : this.defaultConfig.activityTintColor}
-    ]} >
-      {title}
-    </Text>
-      <Image
-      source={checkImage}
-      style={{tintColor: this.props.activityTintColor ? this.props.activityTintColor : this.defaultConfig.activityTintColor}} />
-    </View>
-    );
+        <View style={{
+          flex: 1,
+          // justifyContent: 'space-between',
+          alignItems: "center",
+          paddingHorizontal: 15,
+          flexDirection: 'row'
+        }}>
+          <Image source={checkImage} style={{marginRight: 8}}/>
+          <Text
+            style={[
+              styles.item_text_style,
+              this.props.optionTextStyle,
+              {fontWeight: 'bold'}
+              // {color: this.props.activityTintColor ? this.props.activityTintColor : this.defaultConfig.activityTintColor}
+            ]}>
+            {title}
+          </Text>
+        </View>
+      );
     } else {
+      var unImage = this.props.unImage ? this.props.unImage : this.defaultConfig.unImage;
       return (
-        <View style={{flex: 1, justifyContent: 'space-between', alignItems: "center", paddingHorizontal: 15, flexDirection: 'row'}} >
-    <Text style={[
-        styles.item_text_style,
-        this.props.optionTextStyle,
-        {color: this.props.tintColor ? this.props.tintColor : this.defaultConfig.tintColor}
-    ]} >{title}</Text>
-      </View>
-    );
+        <View style={{
+          flex: 1,
+          // justifyContent: 'space-between',
+          alignItems: "center",
+          paddingHorizontal: 15,
+          flexDirection: 'row'
+        }}>
+          <Image source={unImage} style={{marginRight: 8}}/>
+          <Text style={[
+            styles.item_text_style,
+            this.props.optionTextStyle,
+            // {color: this.props.tintColor ? this.props.tintColor : this.defaultConfig.tintColor}
+          ]}>{title}</Text>
+        </View>
+      );
     }
   }
 
@@ -65,30 +92,41 @@ class DropdownMenu extends Component {
     if (this.state.activityIndex >= 0) {
 
       var currentTitles = this.props.data[this.state.activityIndex];
-
+      // alert(currentTitles);
       var heightStyle = {};
       if (this.props.maxHeight && this.props.maxHeight < currentTitles.length * 44) {
         heightStyle.height = this.props.maxHeight;
       }
 
       return (
-        <View style={{position: 'absolute', left: 0, right: 0, top: 40, bottom: 0}}>
-    <TouchableOpacity onPress={() => this.openOrClosePanel(this.state.activityIndex)} activeOpacity={1} style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}>
-    <View style={{opacity: 0.4, backgroundColor: 'black', flex: 1 }} />
-    </TouchableOpacity>
+        <View style={{
+          position: 'absolute',
+          left: 0,
+          top: 40,
+          bottom: 0,
+          right: 0,
+          borderTopWidth: 1,
+          borderTopColor: '#EBEBEB'
+        }}>
+          <TouchableOpacity onPress={() => this.openOrClosePanel(this.state.activityIndex)} activeOpacity={1}
+                            style={{position: 'absolute', left: 0, right: 0, top: 0, bottom: 0}}>
+            <View style={{opacity: 0.4, backgroundColor: 'black', flex: 1}}/>
+          </TouchableOpacity>
 
-      <ScrollView style={[{position: 'absolute', top: 0, left: 0, right: 0, backgroundColor: 'white'}, heightStyle]} >
-      {
-        currentTitles.map((title, index) =>
-        <TouchableOpacity key={index} activeOpacity={1} style={{flex: 1, height: 44}} onPress={this.itemOnPress.bind(this, index)} >
-        {this.renderChcek(index, title)}
-      <View style={{backgroundColor: '#F6F6F6', height: 1, marginLeft: 15}} />
-      </TouchableOpacity>
-      )
-      }
-    </ScrollView>
-      </View>
-    );
+          <ScrollView
+            style={[{position: 'absolute', top: 0, left: 0, right: 0, backgroundColor: 'white'}, heightStyle]}>
+            {
+              currentTitles.map((title, index) =>
+                <TouchableOpacity key={index} activeOpacity={1} style={{flex: 1, height: 44}}
+                                  onPress={this.itemOnPress.bind(this, index)}>
+                  {this.renderChcek(index, title)}
+                  <View style={{backgroundColor: '#F6F6F6', height: 1, marginHorizontal: 15}}/>
+                </TouchableOpacity>
+              )
+            }
+          </ScrollView>
+        </View>
+      );
     } else {
       return (null);
     }
@@ -165,60 +203,68 @@ class DropdownMenu extends Component {
     var icon = this.props.arrowImg ? this.props.arrowImg : this.defaultConfig.arrowImg;
     return (
       <Animated.Image
-    source={icon}
-    style={{
-      width:6,
-        height:4,
-        marginLeft: 8,
-        tintColor: (index === this.state.activityIndex) ? (this.props.activityTintColor ? this.props.activityTintColor : this.defaultConfig.activityTintColor) : (this.props.tintColor ? this.props.tintColor : this.defaultConfig.tintColor),
-        transform: [{
-        rotateZ: this.state.rotationAnims[index].interpolate({
-          inputRange: [0, 1],
-          outputRange: ['0deg', '360deg']
-        })
-      }]
-    }} />
-  );
+        source={icon}
+        style={{
+          width: 12,
+          height: 6,
+          tintColor: this.props.tintColor ? this.props.tintColor : this.defaultConfig.tintColor,
+          transform: [{
+            rotateZ: this.state.rotationAnims[index].interpolate({
+              inputRange: [0, 1],
+              outputRange: ['0deg', '360deg']
+            })
+          }]
+        }}/>
+    );
   }
 
   render() {
 
     return (
-      <View style={{flexDirection: 'column', flex: 1}} >
-  <View style={{
-      flexDirection: 'row',
-        backgroundColor: this.props.bgColor ? this.props.bgColor : this.defaultConfig.bgColor}} >
-    {
-      this.props.data.map((rows, index) =>
-      <TouchableOpacity
-      activeOpacity={1}
-      onPress={this.openOrClosePanel.bind(this, index)}
-      key={index}
-      style={{flex: 1, height: 48, alignItems: "center", justifyContent: "center"}} >
-    <View style={{flexDirection: 'row', alignItems: "center", justifyContent: "center"}} >
-    <Text
-      style={[
-        styles.title_style,
-        this.props.titleStyle,
-        {color: (index === this.state.activityIndex) ?
-          (this.props.activityTintColor ? this.props.activityTintColor : this.defaultConfig.activityTintColor)
-          :
-          (this.props.tintColor ? this.props.tintColor : this.defaultConfig.tintColor)}
-    ]} >
-      {rows[this.state.selectIndex[index]]}
-    </Text>
-    {this.renderDropDownArrow(index)}
-    </View>
-    </TouchableOpacity>
-    )
-    }
-  </View>
-    {this.props.children}
+      <View style={{flexDirection: 'column', flex: 1}}>
+        <View style={{
+          flexDirection: 'row',
+          backgroundColor: this.props.bgColor ? this.props.bgColor : this.defaultConfig.bgColor
+        }}>
+          {
+            this.props.data.map((rows, index) =>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={this.openOrClosePanel.bind(this, index)}
+                key={index}
+                style={{
+                  flex: 1,
+                  height: 40,
+                  justifyContent: "center",
+                  marginLeft: index === 0 ? 15 : 8,
+                  marginRight: index === 0 ? 8 : 15
+                }}>
+                <View style={{flexDirection: 'row', alignItems: "center"}}>
+                  <Text
+                    style={[
+                      styles.title_style,
+                      this.props.titleStyle,
+                      {
+                        flex: 1,
+                        color: (index === this.state.activityIndex) ? (this.props.tintColor ? this.props.tintColor : this.defaultConfig.tintColor)
+                          : (this.props.tintColor ? this.props.tintColor : this.defaultConfig.tintColor)
+                      }
+                    ]}>
+                    {rows[this.state.selectIndex[index]]}
+                  </Text>
+                  {this.renderDropDownArrow(index)}
+                  {index === 0 ? <Image source={this.props.coline} style={{marginLeft: 8}}/> : null}
+                </View>
+              </TouchableOpacity>
+            )
+          }
+        </View>
+        {this.props.children}
 
-    {this.renderActivityPanel()}
+        {this.renderActivityPanel()}
 
-  </View>
-  );
+      </View>
+    );
   }
 
 }
@@ -229,11 +275,13 @@ DropdownMenu.propTypes = {
   activityTintColor: PropTypes.string,
   arrowImg: PropTypes.number,
   checkImage: PropTypes.number,
+  unImage: PropTypes.number,
   data: PropTypes.array,
   bannerAction: PropTypes.func,
   optionTextStyle: PropTypes.object,
   titleStyle: PropTypes.object,
-  maxHeight: PropTypes.number
+  maxHeight: PropTypes.number,
+  coline: PropTypes.number
 }
 
 const styles = StyleSheet.create({

@@ -1,6 +1,6 @@
 # react-native-dropdown-menu
 
-A `<DropdownMenu>` component for react-native.Easy to use.
+A `<DropdownMenu>` component for react-native ( iOS ).  Easy to use.   
 
  ![image](https://github.com/WheelerLee/react-native-dropdown-menu/blob/master/screenshot1.gif?raw=true)
 

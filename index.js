@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {View, Text, TouchableHighlight, Image, TouchableOpacity, ScrollView, Animated, Easing, StyleSheet} from 'react-native';
+import {View, Text, Image, TouchableOpacity, ScrollView, Animated, Easing, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
 
 class DropdownMenu extends Component {

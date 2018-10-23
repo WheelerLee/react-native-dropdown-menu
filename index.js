@@ -42,6 +42,36 @@ class DropdownMenu extends Component {
 
   }
 
+  /**
+   *
+   * @param index
+   * @param title
+   * @returns {*}
+   */
+  returnImage(index) {
+    switch (index) {
+      case 0:
+        return null;
+        break;
+      case 1:
+        return (<Image style={{marginLeft: 8}} source={this.props.desc}/>)
+        break;
+      case 2:
+        return (<Image style={{marginLeft: 8}} source={this.props.esc}/>)
+        break;
+      case 3:
+        return (<Image style={{marginLeft: 8}} source={this.props.desc}/>)
+        break;
+      case 4:
+        return (<Image style={{marginLeft: 8}} source={this.props.esc}/>)
+        break;
+      default:
+        break;
+    }
+
+  }
+
+
   renderChcek(index, title) {
     var activityIndex = this.state.activityIndex;
     if (this.state.selectIndex[activityIndex] == index) {
@@ -65,6 +95,7 @@ class DropdownMenu extends Component {
             ]}>
             {title}
           </Text>
+          {activityIndex > 0 ? this.returnImage(index) : null}
         </View>
       );
     } else {
@@ -83,6 +114,7 @@ class DropdownMenu extends Component {
             this.props.optionTextStyle,
             // {color: this.props.tintColor ? this.props.tintColor : this.defaultConfig.tintColor}
           ]}>{title}</Text>
+          {activityIndex > 0 ? this.returnImage(index) : null}
         </View>
       );
     }
@@ -224,7 +256,7 @@ class DropdownMenu extends Component {
       <View style={{flexDirection: 'column', flex: 1}}>
         <View style={{
           flexDirection: 'row',
-          backgroundColor: this.props.bgColor ? this.props.bgColor : this.defaultConfig.bgColor
+          backgroundColor: this.props.bgColor ? this.props.bgColor : this.defaultConfig.bgColor,borderBottomWidth: 1, borderBottomColor:'#E6E6E6'
         }}>
           {
             this.props.data.map((rows, index) =>
@@ -245,13 +277,17 @@ class DropdownMenu extends Component {
                       styles.title_style,
                       this.props.titleStyle,
                       {
-                        flex: 1,
                         color: (index === this.state.activityIndex) ? (this.props.tintColor ? this.props.tintColor : this.defaultConfig.tintColor)
                           : (this.props.tintColor ? this.props.tintColor : this.defaultConfig.tintColor)
                       }
                     ]}>
                     {rows[this.state.selectIndex[index]]}
                   </Text>
+                  {index === 1 ? (this.state.selectIndex[index] === 1 || this.state.selectIndex[index] === 3 ?
+                    <Image style={{marginLeft: 8}}
+                           source={this.props.desc}/> : (this.state.selectIndex[index] === 0 ? null :
+                      <Image style={{marginLeft: 8}} source={this.props.esc}/>)) : null}
+                  <View style={{flex: 1}}/>
                   {this.renderDropDownArrow(index)}
                   {index === 0 ? <Image source={this.props.coline} style={{marginLeft: 8}}/> : null}
                 </View>

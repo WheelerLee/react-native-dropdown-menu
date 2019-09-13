@@ -4,7 +4,27 @@ import React, { Component } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView, Animated, Easing, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 
-class DropdownMenu extends Component {
+type Props = {
+  data: Array<Array<string>>,
+  bgColor?: string,
+  tintColor?: string,
+  activityTintColor?: string,
+  arrowImg?: number,
+  checkImage?: number,
+  bannerAction?: Function,
+  optionTextStyle?: any,
+  titleStyle?: any,
+  maxHeight?: number,
+  fixedTitles?: Array<string>
+};
+
+type State = {
+  activityIndex: number,
+  selectIndex: number,
+  rotationAnims: Array<any>
+};
+
+class DropdownMenu extends Component<Props, State> {
   constructor(props, context) {
     super(props, context);
 
@@ -82,11 +102,11 @@ class DropdownMenu extends Component {
 
           <ScrollView style={[{ position: "absolute", top: 0, left: 0, right: 0, backgroundColor: "white" }, heightStyle]}>
             {currentTitles.map((title, index) => (
-              <TouchableOpacity key={index} activeOpacity={1} style={{ flex: 1, height: 44 }} onPress={this.itemOnPress.bind(this, index)}>
-                {this.renderCheck(index, title)}
-                <View style={{ backgroundColor: "#F6F6F6", height: 1, marginLeft: 15 }} />
-              </TouchableOpacity>
-            ))}
+                <TouchableOpacity key={index} activeOpacity={1} style={{ flex: 1, height: 44 }} onPress={this.itemOnPress.bind(this, index)}>
+                  {this.renderCheck(index, title)}
+                  <View style={{ backgroundColor: "#F6F6F6", height: 1, marginLeft: 15 }} />
+                </TouchableOpacity>
+              ))}
           </ScrollView>
         </View>
       );
@@ -186,6 +206,7 @@ class DropdownMenu extends Component {
   }
 
   render() {
+    const { fixedTitles } = this.props;
     return (
       <View style={{ flexDirection: "column", flex: 1 }}>
         <View
@@ -218,7 +239,7 @@ class DropdownMenu extends Component {
                     }
                   ]}
                 >
-                  {rows[this.state.selectIndex[index]]}
+                  {fixedTitles && fixedTitles.length > index ? fixedTitles[index] : rows[this.state.selectIndex[index]]}
                 </Text>
                 {this.renderDropDownArrow(index)}
               </View>

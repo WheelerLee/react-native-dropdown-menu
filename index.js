@@ -29,7 +29,7 @@ class DropdownMenu extends Component {
 
   }
 
-  renderChcek(index, title) {
+  renderCheck(index, title) {
     var activityIndex = this.state.activityIndex;
     if (this.state.selectIndex[activityIndex] == index) {
       var checkImage = this.props.checkImage ? this.props.checkImage : this.defaultConfig.checkImage;
@@ -81,7 +81,7 @@ class DropdownMenu extends Component {
       {
         currentTitles.map((title, index) =>
         <TouchableOpacity key={index} activeOpacity={1} style={{flex: 1, height: 44}} onPress={this.itemOnPress.bind(this, index)} >
-        {this.renderChcek(index, title)}
+        {this.renderCheck(index, title)}
       <View style={{backgroundColor: '#F6F6F6', height: 1, marginLeft: 15}} />
       </TouchableOpacity>
       )

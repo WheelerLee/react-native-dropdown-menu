@@ -15,12 +15,13 @@ type Props = {
   optionTextStyle?: any,
   titleStyle?: any,
   maxHeight?: number,
-  fixedTitles?: Array<string>
+  fixedTitles?: Array<string>,
+  handler?: Function
 };
 
 type State = {
   activityIndex: number,
-  selectIndex: number,
+  selectIndex: Array<number>,
   rotationAnims: Array<any>
 };
 

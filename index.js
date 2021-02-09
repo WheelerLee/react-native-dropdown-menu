@@ -149,7 +149,8 @@ class DropdownMenu extends Component<Props, State> {
     Animated.timing(this.state.rotationAnims[index], {
       toValue: 0.5,
       duration: 300,
-      easing: Easing.linear
+      easing: Easing.linear,
+      useNativeDriver: true
     }).start();
   }
 
@@ -157,7 +158,8 @@ class DropdownMenu extends Component<Props, State> {
     Animated.timing(this.state.rotationAnims[index], {
       toValue: 0,
       duration: 300,
-      easing: Easing.linear
+      easing: Easing.linear,
+      useNativeDriver: true
     }).start();
   }
 
